@@ -1,16 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CustomFilter from "../../components/CustomFilter";
 import CustomTable from "../../components/CustomTable";
-import {
-  dummyBorrows as initialBorrows,
-  borrowHeaders,
-} from "./data/dummyBorrows.js";
+import LoadingBook from "../../components/LoadingBook";
+import { request } from "../../lib/services/api.js";
+import { borrowHeaders } from "./data/dummyBorrows.js";
 
 const Borrows = () => {
-  const [borrows] = useState(initialBorrows);
+  const [borrows, setBorrows] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  // فلترة سجلات الاستعارة حسب اسم المستعير أو رقم الكتاب
+  useEffect(() => {
+    const fetchBorrows = async () => {
+      try {
+        setIsLoading(true);
+        const borrowsResult = await request("borrows");
+        setBorrows(borrowsResult);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      } catch (error) {
+        console.error("Failed to fetch books and borrows:", error);
+        setIsLoading(false);
+      }
+    };
+    fetchBorrows();
+  }, []);
+
   const filteredBorrows = borrows.filter((borrow) => {
     const term = searchValue.toLowerCase();
     return (
@@ -19,9 +35,16 @@ const Borrows = () => {
     );
   });
 
+  if (isLoading) {
+    return (
+      <main className="w-full h-[80vh] flex items-center justify-center bg-white">
+        <LoadingBook />
+      </main>
+    );
+  }
+
   return (
     <main className="max-w-7xl mx-auto p-6">
-      {/* شريط البحث والتصفية */}
       <div className="flex justify-between items-center mb-4">
         <CustomFilter
           searchValue={searchValue}
@@ -30,7 +53,6 @@ const Borrows = () => {
         />
       </div>
 
-      {/* جدول البيانات بدون تمرير renderActions للعرض فقط */}
       <CustomTable headers={borrowHeaders} data={filteredBorrows} />
     </main>
   );

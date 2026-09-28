@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"; // Essential for routing loops
+import logo from "../assets/logo.png";
 
 const Header = () => {
   return (
@@ -7,9 +8,7 @@ const Header = () => {
         <div className="flex items-center gap-10 h-16">
           {/* Logo Group */}
           <div className="shrink-0 flex items-center gap-2">
-            <span className="text-xl font-bold text-white tracking-wide">
-              Library<span className="text-orange-500">Manager</span>
-            </span>
+            <img src={logo} alt="Logo" className="h-40 w-40 object-contain" />
           </div>
 
           <div className="flex space-x-4">

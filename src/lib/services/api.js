@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/authors/";
+const BASE_URL = "http://localhost:3000/";
 export const request = async (endpoint, method = "GET", body) => {
   try {
     const jsonResponse = await fetch(BASE_URL + endpoint, {

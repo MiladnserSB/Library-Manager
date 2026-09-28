@@ -16,11 +16,12 @@ export const bookFields = [
     placeholder: "Fiction, Classic...",
   },
   {
-    name: "authorId",
-    label: "Author ID",
-    type: "number",
+    name: "authorName",
+    label: "Author Name",
+    type: "select",
     required: true,
-    placeholder: "1, 2, 3...",
+    placeholder: "Enter author name...",
+    options: [],
   },
   { name: "available", label: "Status", type: "boolean", required: true },
 ];

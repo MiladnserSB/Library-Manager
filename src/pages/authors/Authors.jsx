@@ -1,34 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomFilter from "../../components/CustomFilter";
 import CustomTable from "../../components/CustomTable";
 import CustomModal from "../../components/CustomModal";
 import AuthorActions from "./components/AuthorActions";
 import AuthorModalContent from "./components/AuthorModalContent";
-import {
-  dummyAuthors as initialAuthors,
-  authorHeaders,
-} from "./data/dummyAuthors.js";
+import LoadingBook from "../../components/LoadingBook";
+import { request } from "../../lib/services/api.js";
+import { authorHeaders } from "./data/dummyAuthors.js";
 
 const initialFormState = { name: "", nationality: "" };
 
 const Authors = () => {
-  // البيانات والبحث
-  const [authors, setAuthors] = useState(initialAuthors);
+  const [authors, setAuthors] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  // حالات المودال والنموذج
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState("ADD"); // "ADD" | "EDIT" | "DELETE"
+  const [modalMode, setModalMode] = useState("ADD");
   const [selectedAuthor, setSelectedAuthor] = useState(null);
   const [formData, setFormData] = useState(initialFormState);
 
-  // تحديث القيم
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      try {
+        setIsLoading(true);
+        const authorsFetched = await request("authors");
+        setAuthors(authorsFetched);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      } catch (error) {
+        console.error("Failed to fetch authors:", error);
+        setIsLoading(false);
+      }
+    };
+    fetchAuthors();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // دالة موحدة واحترافية لفتح المودال بأي وضع (ADD, EDIT, DELETE)
   const handleOpenModal = (mode, author = null) => {
     setModalMode(mode);
     setSelectedAuthor(author);
@@ -36,40 +49,63 @@ const Authors = () => {
     setIsModalOpen(true);
   };
 
-  // حفظ البيانات (إضافة / تعديل)
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
 
     if (modalMode === "ADD") {
       const newAuthor = { id: Date.now(), ...formData };
-      setAuthors((prev) => [...prev, newAuthor]);
+
+      try {
+        const response = await request("authors", "POST", newAuthor);
+        setAuthors((prev) => [...prev, response]);
+      } catch (error) {
+        console.error("Failed to add author:", error);
+      }
     } else if (modalMode === "EDIT") {
-      setAuthors((prev) =>
-        prev.map((a) =>
-          a.id === selectedAuthor.id ? { ...a, ...formData } : a,
-        ),
-      );
+      try {
+        const editedAuthor = { ...selectedAuthor, ...formData };
+        const response = await request(
+          `authors/${selectedAuthor.id}`,
+          "PUT",
+          editedAuthor,
+        );
+        setAuthors((prev) =>
+          prev.map((a) => (a.id === selectedAuthor.id ? response : a)),
+        );
+      } catch (error) {
+        console.error("Failed to edit author:", error);
+      }
     }
 
     setIsModalOpen(false);
   };
 
-  // تأكيد الحذف
-  const handleConfirmDelete = () => {
-    setAuthors((prev) => prev.filter((a) => a.id !== selectedAuthor.id));
+  const handleConfirmDelete = async () => {
+    try {
+      await request(`authors/${selectedAuthor.id}`, "DELETE");
+      setAuthors((prev) => prev.filter((a) => a.id !== selectedAuthor.id));
+    } catch (error) {
+      console.error("Failed to delete author:", error);
+    }
     setIsModalOpen(false);
   };
 
-  // فلترة المؤلفين بحسب الاسم أو الجنسية
   const filteredAuthors = authors.filter(
     (author) =>
       author.name?.toLowerCase().includes(searchValue.toLowerCase()) ||
       author.nationality?.toLowerCase().includes(searchValue.toLowerCase()),
   );
 
+  if (isLoading) {
+    return (
+      <main className="w-full h-[80vh] flex items-center justify-center bg-white">
+        <LoadingBook />
+      </main>
+    );
+  }
+
   return (
     <main className="max-w-7xl mx-auto p-6">
-      {/* شريط التحكم العلوي */}
       <div className="flex justify-between items-center mb-4">
         <CustomFilter
           searchValue={searchValue}
@@ -85,7 +121,6 @@ const Authors = () => {
         </button>
       </div>
 
-      {/* الجدول الرئيسي */}
       <CustomTable
         headers={authorHeaders}
         data={filteredAuthors}
@@ -97,7 +132,6 @@ const Authors = () => {
         )}
       />
 
-      {/* المودال الشامل */}
       <CustomModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -111,7 +145,7 @@ const Authors = () => {
       >
         <AuthorModalContent
           modalMode={modalMode}
-          selectedAuthor={selectedAuthor}
+          selectedBook={selectedAuthor}
           formData={formData}
           onInputChange={handleInputChange}
           onSubmit={handleSubmitForm}
