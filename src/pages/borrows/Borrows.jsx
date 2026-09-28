@@ -18,7 +18,7 @@ const Borrows = () => {
         setBorrows(borrowsResult);
         setTimeout(() => {
           setIsLoading(false);
-        }, 2000);
+        }, 1500);
       } catch (error) {
         console.error("Failed to fetch books and borrows:", error);
         setIsLoading(false);

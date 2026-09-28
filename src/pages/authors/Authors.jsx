@@ -28,7 +28,7 @@ const Authors = () => {
         setAuthors(authorsFetched);
         setTimeout(() => {
           setIsLoading(false);
-        }, 2000);
+        }, 1500);
       } catch (error) {
         console.error("Failed to fetch authors:", error);
         setIsLoading(false);

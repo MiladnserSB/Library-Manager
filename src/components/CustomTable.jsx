@@ -1,10 +1,9 @@
-// src/components/CustomTable.jsx
 const CustomTable = ({ headers = [], data = [], renderActions }) => {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left text-gray-600">
-          {/* Header Row */}
+
           <thead className="bg-gray-50 text-gray-700 font-semibold border-b border-gray-100">
             <tr>
               {headers.map((header) => (
@@ -12,13 +11,12 @@ const CustomTable = ({ headers = [], data = [], renderActions }) => {
                   {typeof header === "object" ? header.label : header}
                 </th>
               ))}
-              {renderActions && (
+              {renderActions ? 
                 <th className="px-6 py-3.5 text-center">Actions</th>
-              )}
+               : null}
             </tr>
           </thead>
 
-          {/* Body Rows */}
           <tbody className="divide-y divide-gray-100">
             {data.length > 0 ? (
               data.map((item, index) => (
@@ -26,7 +24,6 @@ const CustomTable = ({ headers = [], data = [], renderActions }) => {
                   key={item.id || index}
                   className="hover:bg-gray-50/50 transition-colors"
                 >
-                  {/* نقوم بالمرور على الهيدرز وعرض القيمة المقابلة لكل key من الكائن */}
                   {headers.map((header) => {
                     const fieldKey =
                       typeof header === "object" ? header.key : header;
@@ -39,12 +36,11 @@ const CustomTable = ({ headers = [], data = [], renderActions }) => {
                     );
                   })}
 
-                  {/* خلايا أزرار الأكشن */}
-                  {renderActions && (
+                  {renderActions ? 
                     <td className="px-6 py-4 text-center">
                       {renderActions(item)}
                     </td>
-                  )}
+                   : null}
                 </tr>
               ))
             ) : (

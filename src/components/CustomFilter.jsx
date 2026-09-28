@@ -1,5 +1,3 @@
-import React from "react";
-
 const CustomFilter = ({
   searchValue,
   onSearchChange,
@@ -29,7 +27,7 @@ const CustomFilter = ({
           className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-all"
           placeholder={placeholder}
           value={searchValue}
-          onChange={(e) => onSearchChange(e.target.value)} // تحديث الحالة عند الأب فوراً
+          onChange={(e) => onSearchChange(e.target.value)} 
         />
       </div>
     </div>

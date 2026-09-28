@@ -1,4 +1,3 @@
-// src/pages/books/data/bookFields.js
 
 export const bookFields = [
   {
@@ -16,12 +15,12 @@ export const bookFields = [
     placeholder: "Fiction, Classic...",
   },
   {
-    name: "authorName",
+    name: "authorId",  
     label: "Author Name",
     type: "select",
     required: true,
-    placeholder: "Enter author name...",
     options: [],
+    placeholder: "Select author...",
   },
   { name: "available", label: "Status", type: "boolean", required: true },
 ];
@@ -37,7 +36,7 @@ export const borrowFields = [
   {
     name: "borrowDate",
     label: "Borrow Date (Today)",
-    type: "text",
+    type: "date",
     required: true,
     readOnly: true,
   },
@@ -49,4 +48,4 @@ export const borrowFields = [
   },
 ];
 
-export const bookHeaders = ["id", "title", "authorId", "category", "available"];
+export const bookHeaders = ["id", "title", "author", "category", "available"];

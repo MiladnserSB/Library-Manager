@@ -1,4 +1,3 @@
-
 const CustomForm = ({
   fields = [],
   formData,
@@ -11,12 +10,10 @@ const CustomForm = ({
       {fields.map((field) => {
         return (
           <div key={field.name} className="flex flex-col gap-1">
-            {/* عنوان الحقل (Label) */}
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
               {field.label}
             </label>
 
-            {/* 1. إذا كان نوع الحقل قائمة اختيار (Select Dropdown) */}
             {field.type === "select" ? (
               <select
                 name={field.name}
@@ -33,7 +30,6 @@ const CustomForm = ({
                 ))}
               </select>
             ) : field.type === "boolean" ? (
-              /* 2. إذا كان نوع الحقل منطقي (تحديد التوفر مثلاً) */
               <select
                 name={field.name}
                 value={
@@ -42,7 +38,6 @@ const CustomForm = ({
                     : String(formData[field.name])
                 }
                 onChange={(e) => {
-                  // تحويل النص الجاي من السيلكت "true"/"false" إلى Boolean حقيقي قبل الحفظ
                   const val =
                     e.target.value === "true"
                       ? true
@@ -58,7 +53,6 @@ const CustomForm = ({
                 <option value="false">❌ Borrowed</option>
               </select>
             ) : (
-              /* 3. الحقول النصية العادية والافتراضية (Text, Number, Date) */
               <input
                 type={field.type}
                 name={field.name}
@@ -72,8 +66,6 @@ const CustomForm = ({
           </div>
         );
       })}
-
-      {/* زر الإرسال والحفظ السفلي */}
       <div className="flex justify-end pt-4 border-t border-gray-100 mt-6">
         <button
           type="submit"

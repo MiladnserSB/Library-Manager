@@ -1,7 +1,7 @@
 const BookActions = ({ book, onEdit, onDelete, onBorrow, onReturn }) => {
   return (
     <div className="flex items-center gap-2">
-      {/* زر الاستعارة أو الإرجاع الديناميكي */}
+
       {book.available ? (
         <button
           type="button"
@@ -20,7 +20,7 @@ const BookActions = ({ book, onEdit, onDelete, onBorrow, onReturn }) => {
         </button>
       )}
 
-      {/* زر التعديل */}
+
       <button
         type="button"
         onClick={onEdit}
@@ -29,7 +29,7 @@ const BookActions = ({ book, onEdit, onDelete, onBorrow, onReturn }) => {
         Edit
       </button>
 
-      {/* زر الحذف */}
+
       <button
         type="button"
         onClick={onDelete}

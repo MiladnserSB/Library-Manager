@@ -1,6 +1,4 @@
-// src/pages/books/components/BookModalContent.jsx
 import CustomForm from "../../../components/CustomForm";
-import { bookFields, borrowFields } from "../data/bookFields";
 
 const BookModalContent = ({
   modalMode,
@@ -10,6 +8,7 @@ const BookModalContent = ({
   onSubmit,
   onCancelDelete,
   onConfirmDelete,
+  overrideFields,
 }) => {
   if (modalMode === "DELETE") {
     return (
@@ -39,7 +38,6 @@ const BookModalContent = ({
     );
   }
 
-  const fields = modalMode === "BORROW" ? borrowFields : bookFields;
   const submitLabel =
     modalMode === "ADD"
       ? "Create Book"
@@ -49,7 +47,7 @@ const BookModalContent = ({
 
   return (
     <CustomForm
-      fields={fields}
+      fields={overrideFields}
       formData={formData}
       onInputChange={onInputChange}
       onSubmit={onSubmit}

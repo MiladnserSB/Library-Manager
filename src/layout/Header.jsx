@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"; // Essential for routing loops
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 const Header = () => {
@@ -6,7 +6,6 @@ const Header = () => {
     <header className="bg-blue-900 shadow-md">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-10 h-16">
-          {/* Logo Group */}
           <div className="shrink-0 flex items-center gap-2">
             <img src={logo} alt="Logo" className="h-40 w-40 object-contain" />
           </div>
