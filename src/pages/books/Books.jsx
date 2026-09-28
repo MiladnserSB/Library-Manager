@@ -235,9 +235,22 @@ const Books = () => {
         <button
           type="button"
           onClick={handleOpenAdd}
-          className="bg-blue-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-800 transition-colors cursor-pointer shadow-sm"
+          className="group relative inline-flex items-center gap-2 bg-blue-900 text-white px-4 py-2 rounded-lg font-semibold text-sm border border-blue-800/30 shadow-md shadow-blue-900/30 hover:bg-blue-800 hover:shadow-lg hover:shadow-blue-900/50 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 cursor-pointer"
         >
-          Add Book
+          <svg
+            className="w-4 h-4 transition-transform duration-200 group-hover:rotate-90"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"
+            />
+          </svg>
+          <span>Add Book</span>
         </button>
       </div>
 

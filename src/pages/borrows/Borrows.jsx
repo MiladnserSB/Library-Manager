@@ -35,6 +35,24 @@ const Borrows = () => {
     );
   });
 
+  const todayStr = new Date().toISOString().split("T")[0];
+
+  const checkDelayedReturn = filteredBorrows.map((borrow) => ({
+    ...borrow,
+    returnDate:
+      todayStr > borrow.returnDate ? (
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-red-50 text-red-700 border border-red-200/60 shadow-xs">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+          </span>
+          <span>{borrow.returnDate} (Delayed)</span>
+        </span>
+      ) : (
+        borrow.returnDate
+      ),
+  }));
+
   if (isLoading) {
     return (
       <main className="w-full h-[80vh] flex items-center justify-center bg-white">
@@ -53,7 +71,7 @@ const Borrows = () => {
         />
       </div>
 
-      <CustomTable headers={borrowHeaders} data={filteredBorrows} />
+      <CustomTable headers={borrowHeaders} data={checkDelayedReturn} />
     </main>
   );
 };
