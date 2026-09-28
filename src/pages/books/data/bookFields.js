@@ -48,3 +48,5 @@ export const borrowFields = [
     required: true,
   },
 ];
+
+export const bookHeaders = ["id", "title", "authorId", "category", "available"];

@@ -3,7 +3,7 @@ import CustomFilter from "../../components/CustomFilter";
 import CustomTable from "../../components/CustomTable";
 import LoadingBook from "../../components/LoadingBook";
 import { request } from "../../lib/services/api.js";
-import { borrowHeaders } from "./data/dummyBorrows.js";
+import { borrowHeaders } from "./data/borrowHeaders.js";
 
 const Borrows = () => {
   const [borrows, setBorrows] = useState([]);

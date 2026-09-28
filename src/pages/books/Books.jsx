@@ -5,7 +5,7 @@ import CustomTable from "../../components/CustomTable";
 import CustomModal from "../../components/CustomModal";
 import BookActions from "./components/BookActions";
 import BookModalContent from "./components/BookModalContent";
-import { bookHeaders } from "./data/dummyBooks.js";
+import { bookHeaders } from "./data/bookFields.js";
 import { request } from "../../lib/services/api.js";
 import LoadingBook from "../../components/LoadingBook.jsx";
 const Books = () => {

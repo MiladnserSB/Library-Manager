@@ -6,7 +6,7 @@ import AuthorActions from "./components/AuthorActions";
 import AuthorModalContent from "./components/AuthorModalContent";
 import LoadingBook from "../../components/LoadingBook";
 import { request } from "../../lib/services/api.js";
-import { authorHeaders } from "./data/dummyAuthors.js";
+import { authorHeaders } from "./data/authorsHeaders.js";
 
 const initialFormState = { name: "", nationality: "" };
 
